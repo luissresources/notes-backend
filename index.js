@@ -103,6 +103,35 @@ app.post('/api/notes', (req, res) => {
     })
 })
 
+app.put('/api/notes/:id', (request, response) => {
+  const id = request.params.id
+  const content = request.body.content
+  const important = request.body.important
+  Note.findOne({_id: id})
+    .then(note => {
+      console.log('note: ',note)
+      Note.updateOne({_id : id}, {$set: {content: content, important: important}})
+        .then(result => {
+          console.log('Updated')
+          response.status(200).send({
+            message: 'Note updated',
+            result
+          })
+        })
+        .catch(error => {
+          console.log('Error in update')
+          response.status(400).send({
+            message: 'Update error',
+            error
+          })
+        })
+    })
+
+
+  
+
+})
+
 app.delete('/api/notes/:id', (req, res) => {
   const id = req.params.id
   Note.deleteOne({_id: id}).then(note => {
