@@ -104,7 +104,9 @@ app.post('/api/notes', (req, res) => {
 })
 
 app.delete('/api/notes/:id', (req, res) => {
-  Note.deleteOne({id: req.params.id}).then(note => {
+  const id = req.params.id
+  Note.deleteOne({_id: id}).then(note => {
+    console.log({note})
     res.status(204).end()
     })
 })

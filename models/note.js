@@ -3,6 +3,7 @@ require('dotenv').config()
 
 // connection
 // const password = process.argv[2]
+console.log(process.env.MONGODB_URI)
 const url = process.env.MONGODB_URI
 console.log(url)
 
