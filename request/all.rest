@@ -1,4 +1,9 @@
-DELETE http://localhost:3002/api/notes/62e8b7a31c909b8d300a3b3d
+GET http://localhost:3002/api/notes
+
+###
+GET http://localhost:3002/api/notes/62e8aeaf05f0de4629564522
+
+
 ###
 POST http://localhost:3002/api/notes HTTP/1.1
 Content-Type: application/json
@@ -17,9 +22,6 @@ Content-Type: application/json
   "important": false
 }
 
-
 ###
-GET http://localhost:3002/api/notes
+DELETE http://localhost:3002/api/notes/62e9378c5cadc22253b1ca03
 
-###
-GET http://localhost:3002/api/notes/62e84810c2534f3969e0411a
