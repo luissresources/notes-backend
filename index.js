@@ -11,26 +11,26 @@ const app = express()
 app.use(express.json())
 app.use(express.static('build'))
 
-let notes = [
-  {
-    id: 1,
-    content: 'HTML is easy',
-    date: '2019-05-30T17:30:31.098Z',
-    important: true
-  },
-  {
-    id: 2,
-    content: 'Browser can execute only JavaScript',
-    date: '2019-05-30T18:39:34.091Z',
-    important: false
-  },
-  {
-    id: 3,
-    content: 'GET and POST are the most important methods of HTTP protocol',
-    date: '2019-05-30T19:20:14.298Z',
-    important: true
-  }
-]
+// let notes = [
+//   {
+//     id: 1,
+//     content: 'HTML is easy',
+//     date: '2019-05-30T17:30:31.098Z',
+//     important: true
+//   },
+//   {
+//     id: 2,
+//     content: 'Browser can execute only JavaScript',
+//     date: '2019-05-30T18:39:34.091Z',
+//     important: false
+//   },
+//   {
+//     id: 3,
+//     content: 'GET and POST are the most important methods of HTTP protocol',
+//     date: '2019-05-30T19:20:14.298Z',
+//     important: true
+//   }
+// ]
 
 morgan.token('dataPost', function getId (req) {
   const body = JSON.stringify(req.body)
@@ -70,30 +70,18 @@ app.get('/info', (request, response) => {
   response.status(200).send(txt)
 })
 
-app.post('/api/notes', (req, res) => {
-  const body = req.body
-  const content = req.body.content
-  const important = req.body.important
+app.post('/api/notes', (request, response,next) => {
+  const body = request.body
+  const content = request.body.content
+  const important = request.body.important
   console.log({content, important})
 
-  if(!content && important === undefined){
-    return res.status(400).json({
-      error: 'missing content'
-    })
-  }
-
-  if(content === undefined) {
-    return res.status(400).json({
-      error: `content not found`
-    })
-  } 
+  // if(content === undefined) {
+  //   return response.status(400).json({
+  //     error: `content missing`
+  //   })
+  // } 
   
-  if (important === undefined) {
-    return res.status(400).json({
-      error: `important not found`
-    })
-  }
-
   const note = new Note({
     content: content,
     date: new Date(),
@@ -101,52 +89,25 @@ app.post('/api/notes', (req, res) => {
   })
   
   note.save()
-    .then(result => {
-      res.status(201).send({
-        message: 'Note added',
-        result
-      })
-    })
+    .then(noteSaved => noteSaved.toJSON())
+    .then(saveAndFormattedNote => response.json(saveAndFormattedNote))
+    .catch(error => next(error))
 })
 
 app.put('/api/notes/:id', (request, response, next) => {
-  /* const id = request.params.id
-  const content = request.body.content
-  const important = request.body.important
-  Note.findOne({_id: id})
-    .then(note => {
-      console.log('note: ',note)
-      Note.updateOne({_id : id}, {$set: {content: content, important: important}})
-        .then(result => {
-          console.log('Updated')
-          response.status(200).send({
-            message: 'Note updated',
-            result
-          })
-        })
-        .catch(error => {
-          console.log({error})
-          // response.status(400).send({
-          //   message: 'Update error',
-          //   error
-          // })
-          next(error)
-        })
-    }) */
+  const body = request.body
 
-    const body = request.body
+  const note = {
+    content: body.content,
+    important: body.important,
+  }
 
-    const note = {
-      content: body.content,
-      important: body.important,
-    }
-
-    // new: true returns the updated object
-    Note.findByIdAndUpdate(request.params.id, note, { new: true })
-      .then(updatedNote => {
-        response.json(updatedNote)
-      })
-      .catch(error => next(error))
+  // new: true returns the updated object
+  Note.findByIdAndUpdate(request.params.id, note, { new: true })
+    .then(updatedNote => {
+      response.json(updatedNote)
+    })
+    .catch(error => next(error))
 })
 
 app.delete('/api/notes/:id', (request, response, next) => {
@@ -174,7 +135,9 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
-  } 
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
+  }
 
   next(error)
 }
