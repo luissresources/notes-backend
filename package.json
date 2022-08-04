@@ -9,8 +9,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && rm -rf ../notes-frontend/build && cd ../notes-frontend && npm run build --prod && cp -r build ../notes-backend",
     "deploy": "git push heroku main",
-    "deploy:full": "npm run build:ui && cd ../notes-backend && git add . && git commit -m uibuild && npm run deploy",    
-    "logs:prod": "heroku logs --tail"
+    "deploy:full": "npm run build:ui && cd ../notes-backend && git add . && git commit -m uibuild && npm run deploy",
+    "logs:prod": "heroku logs --tail",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   },
   "homepage": "https://github.com/luissresources/phonebook-node-express-restapi#readme",
   "devDependencies": {
+    "eslint": "^8.21.0",
     "nodemon": "^2.0.19"
   },
   "dependencies": {

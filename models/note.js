@@ -3,14 +3,16 @@ require('dotenv').config()
 
 // connection
 // const password = process.argv[2]
-console.log(process.env.MONGODB_URI)
+// eslint-disable-next-line no-undef
+// console.log(process.env.MONGODB_URI)
+// eslint-disable-next-line no-undef
 const url = process.env.MONGODB_URI
-console.log(url)
+// console.log(url)
 
-console.log('connecting to ',url)
+// console.log('connecting to ',url)
 
 mongoose.connect(url)
-  .then(result => {
+  .then(() => {
     console.log('connected to MongoDB')
   })
   .catch((error) => {
@@ -20,7 +22,7 @@ mongoose.connect(url)
 const noteSchema = new mongoose.Schema({
   content: {
     type: String,
-    minlength: 5,
+    minlength: 3,
     required: true
   },
   date: {

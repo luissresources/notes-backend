@@ -1,17 +1,17 @@
 [
   {
     "id": 1,
-    "name":"Cristina Estrada",
+    "name":"Cristina",
     "number": 322
   },
   {
     "id": 2,
-    "name":"Sebastian Sanchez",
+    "name":"Sebastian",
     "number": 320
   },
   {
     "id": 3,
-    "name":"Luis Sanchez",
+    "name":"Luis",
     "number": 350
   }
 ]
