@@ -9,19 +9,18 @@ POST http://localhost:3002/api/notes HTTP/1.1
 Content-Type: application/json
 
 {
-  "content": "Express is awesome",
+  "content": "React is awesome",
   "important": true
 }
 
 ###
-PUT http://localhost:3002/api/notes/62ebda4f5c2266bb66d65ae5
+PUT http://localhost:3002/api/notes/62eed69baf06e438abb902aa
 Content-Type: application/json
 
 {
-  "content": "Express is awesome",
+  "content": "Lodash is awesome",
   "important": false
 }
 
 ###
-DELETE http://localhost:3002/api/notes/62ebda4f5c2266bb66d65ae5
-
+DELETE http://localhost:3002/api/notes/62ef2c184525440de8dae482
