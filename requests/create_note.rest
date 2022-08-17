@@ -1,0 +1,7 @@
+POST http://localhost:3003/api/notes 
+Content-Type: application/json
+
+{
+  "content" : "React is awesome",
+  "important" : true
+}

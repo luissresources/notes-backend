@@ -1,0 +1,56 @@
+GET http://localhost:3003/api/notes
+
+###
+GET http://localhost:3003/api/notes/62fc1df95637bdc885b42e28
+
+###
+POST http://localhost:3003/api/notes HTTP/1.1
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "content": "Linux is awesome",
+  "important": true
+}
+
+###
+PUT http://localhost:3003/api/notes/62fc1df95637bdc885b42e28
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "content": "React is awesome",
+  "important": true
+}
+
+###
+DELETE http://localhost:3003/api/notes/62fc1e8d5637bdc885b42e31
+
+###
+GET http://localhost:3003/api/users
+
+###
+GET http://localhost:3003/api/users/62fc1bd25637bdc885b42e20
+
+###
+POST http://localhost:3003/api/users HTTP/1.1
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "name": "Luis Sanchez",
+  "username": "luissdev",
+  "password": "letsgo"
+}
+
+###
+DELETE http://localhost:3003/api/users/
+
+###
+POST http://localhost:3003/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "luissdev",
+  "password": "letsgo"
+}
